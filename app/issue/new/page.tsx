@@ -1,5 +1,5 @@
 "use client"
-import {Button, Callout, Text, TextField} from "@radix-ui/themes"
+import {Button, Callout, Spinner, Text, TextField} from "@radix-ui/themes"
 import MDEditor from '@uiw/react-md-editor';
 
 import React, {useState} from 'react'
@@ -16,8 +16,20 @@ type IssueForm = z.infer<typeof createIssueSchema>
 export default function NewIssuePage() {
     const router = useRouter();
     const [error, setError] = useState<string>();
+    const [isSubmitting, setIsSubmitting] = useState(false)
     const {register, control, handleSubmit, formState: {errors}} = useForm<IssueForm>({
         resolver: zodResolver(createIssueSchema)
+    })
+
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            setIsSubmitting(true)
+            await axios.post("/api/issue", data);
+            router.push("/issue")
+        } catch {
+            setIsSubmitting(false)
+            setError("An unexpected error occurred.");
+        }
     })
 
     return (
@@ -27,14 +39,7 @@ export default function NewIssuePage() {
             </Callout.Root>}
             <form
                 className={"space-y-4"}
-                onSubmit={handleSubmit(async (data) => {
-                    try {
-                        await axios.post("/api/issue", data);
-                        router.push("/issue")
-                    } catch {
-                        setError("An unexpected error occurred.");
-                    }
-                })}>
+                onSubmit={onSubmit}>
                 <div>
                     <TextField.Root
                         size="3"
@@ -64,7 +69,8 @@ export default function NewIssuePage() {
                     }
                 </div>
 
-                <Button type={"submit"}>Submit</Button>
+                <Button disabled={isSubmitting} type={"submit"}>
+                    Submit {isSubmitting && <Spinner/>} </Button>
             </form>
         </div>
     )

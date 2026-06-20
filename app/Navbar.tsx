@@ -18,6 +18,7 @@ export default function Navbar() {
                     src="/logo.png"
                     height={50}
                     width={50}
+                    className="h-auto w-auto"
                     alt="Logo"/>
             </Link>
             <ul className="space-x-6">
