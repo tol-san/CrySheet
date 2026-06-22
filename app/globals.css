@@ -29,4 +29,6 @@ body {
 .radix-themes {
   --default-font-family: var(--font-geist-sans);
   --code-font-family: var(--font-geist-mono);
+  --cursor-button: pointer;
+  --cursor-link: pointer;
 }

@@ -1,10 +1,12 @@
 import React from 'react'
 import prisma from "@/lib/prisma";
 import {notFound} from "next/navigation";
-import {Card, Flex, Heading} from "@radix-ui/themes";
+import {Box, Button, Card, Flex, Grid, Heading} from "@radix-ui/themes";
 import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import {PenLine} from "lucide-react";
+import Link from "next/link";
 
 export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const {id} = await params;
@@ -20,17 +22,25 @@ export default async function Page({params}: { params: Promise<{ id: string }> }
     if (!issue)
         notFound()
     return (
-        <div className={"space-y-4"}>
-            <Heading>{issue.title}</Heading>
-            <Flex mt={"2"} align={"center"}>
-                <IssueStatusBadge status={issue.status}/>
-                <p className={"ml-2"}>{issue.createdAt.toDateString()}</p>
-            </Flex>
-            <Card size="2" className="max-w-2xl">
-                <div className="prose">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{issue.description}</ReactMarkdown>
-                </div>
-            </Card>
-        </div>
+        <Grid columns={{ initial: "1", md: "2" }} gap={"4"}>
+            <Box>
+                <Heading>{issue.title}</Heading>
+                <Flex mt={"2"} mb={"2"} align={"center"}>
+                    <IssueStatusBadge status={issue.status}/>
+                    <p className={"ml-2"}>{issue.createdAt.toDateString()}</p>
+                </Flex>
+                <Card size="2" >
+                    <div className="prose">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{issue.description}</ReactMarkdown>
+                    </div>
+                </Card>
+            </Box>
+            <Box>
+                <Button>
+                    <PenLine size={14} />
+                    <Link href={`/issue/${id}/edit`}>Edit Issue</Link>
+                </Button>
+            </Box>
+        </Grid>
     )
 }
