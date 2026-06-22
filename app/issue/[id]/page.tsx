@@ -7,6 +7,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {PenLine} from "lucide-react";
 import Link from "next/link";
+import EditIssueButton from "@/app/issue/[id]/EditIssueButton";
+import IssueDetail from "@/app/issue/[id]/IssueDetail";
 
 export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const {id} = await params;
@@ -18,28 +20,16 @@ export default async function Page({params}: { params: Promise<{ id: string }> }
     const issue = await prisma.issue.findUnique({
         where: {id: parseInt(id)}
     })
-
     if (!issue)
         notFound()
+    
     return (
         <Grid columns={{ initial: "1", md: "2" }} gap={"4"}>
             <Box>
-                <Heading>{issue.title}</Heading>
-                <Flex mt={"2"} mb={"2"} align={"center"}>
-                    <IssueStatusBadge status={issue.status}/>
-                    <p className={"ml-2"}>{issue.createdAt.toDateString()}</p>
-                </Flex>
-                <Card size="2" >
-                    <div className="prose">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{issue.description}</ReactMarkdown>
-                    </div>
-                </Card>
+                <IssueDetail issue={issue}/>
             </Box>
             <Box>
-                <Button>
-                    <PenLine size={14} />
-                    <Link href={`/issue/${id}/edit`}>Edit Issue</Link>
-                </Button>
+                <EditIssueButton issueId={issue.id}/>
             </Box>
         </Grid>
     )
