@@ -3,6 +3,8 @@ import IssueForm from "@/app/issue/_components/IssueForm";
 import prisma from "@/lib/prisma";
 import {notFound} from "next/navigation";
 
+
+
 export default async function EditIssuePage({params}: {params: Promise<{id: string}>}) {
     const {id} = await params;
     const issueId = Number(id);
@@ -20,3 +22,4 @@ export default async function EditIssuePage({params}: {params: Promise<{id: stri
         <IssueForm issue={issue}/>
     )
 }
+
