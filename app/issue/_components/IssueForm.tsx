@@ -14,7 +14,7 @@ import {Issue} from "@/app/generated/prisma/client";
 type IssueForm = z.infer<typeof issueSchema>
 
 
-export default function IssueForm({issue}: {issue?: Issue}) {
+export default function IssueForm({issue}: { issue?: Issue }) {
     const router = useRouter();
     const [error, setError] = useState<string>();
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -25,7 +25,10 @@ export default function IssueForm({issue}: {issue?: Issue}) {
     const onSubmit = handleSubmit(async (data) => {
         try {
             setIsSubmitting(true)
-            await axios.post("/api/issue", data);
+            if (issue)
+                await axios.patch("/api/issue/" + issue.id, data)
+            else
+                await axios.post("/api/issue", data);
             router.push("/issue")
         } catch {
             setIsSubmitting(false)
@@ -72,7 +75,9 @@ export default function IssueForm({issue}: {issue?: Issue}) {
                 </div>
 
                 <Button disabled={isSubmitting} type={"submit"}>
-                    Submit {isSubmitting && <Spinner/>} </Button>
+                    {issue ? "Update Issue" : "Submit New Issue"}{" "}
+                    {isSubmitting && <Spinner/>}
+                </Button>
             </form>
         </div>
     )

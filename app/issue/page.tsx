@@ -5,7 +5,7 @@ import IssueActionsButton from "@/app/issue/IssueActionsButton";
 import prisma from "@/lib/prisma";
 
 export default async function IssuePage() {
-    const issues = await prisma.issue.findMany({orderBy: {id: "asc"}});
+    const issues = await prisma.issue.findMany({orderBy: {id: "desc"}});
     return (
         <div>
             <IssueActionsButton/>

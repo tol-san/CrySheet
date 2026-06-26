@@ -8,7 +8,6 @@ import {Card, Flex, Heading} from "@radix-ui/themes";
 export default function IssueDetail({issue}: {issue: Issue}) {
     return (
         <>
-
             <Heading>{issue.title}</Heading>
             <Flex mt={"2"} mb={"2"} align={"center"}>
                 <IssueStatusBadge status={issue.status}/>
