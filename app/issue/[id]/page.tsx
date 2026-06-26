@@ -9,6 +9,7 @@ import {PenLine} from "lucide-react";
 import Link from "next/link";
 import EditIssueButton from "@/app/issue/[id]/EditIssueButton";
 import IssueDetail from "@/app/issue/[id]/IssueDetail";
+import DeleteIssueButton from "@/app/issue/[id]/DeleteIssueButton";
 
 export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const {id} = await params;
@@ -24,12 +25,15 @@ export default async function Page({params}: { params: Promise<{ id: string }> }
         notFound()
     
     return (
-        <Grid columns={{ initial: "1", md: "2" }} gap={"4"}>
-            <Box>
+        <Grid columns={{ initial: "1", sm: "5" }} gap={"4"}>
+            <Box gridColumn={{initial: "1", sm: "span 3"}}>
                 <IssueDetail issue={issue}/>
             </Box>
             <Box>
-                <EditIssueButton issueId={issue.id}/>
+                <Flex gap={"3"} direction={"column"}>
+                    <EditIssueButton issueId={issue.id}/>
+                    <DeleteIssueButton/>
+                </Flex>
             </Box>
         </Grid>
     )
