@@ -1,11 +1,11 @@
 import React from 'react'
 import {Table} from "@radix-ui/themes";
-import prisma from "@/lib/prisma";
 import {IssueStatusBadge, Link} from "@/app/components";
 import IssueActionsButton from "@/app/issue/IssueActionsButton";
+import prisma from "@/lib/prisma";
 
 export default async function IssuePage() {
-    const issues = await prisma.issue.findMany();
+    const issues = await prisma.issue.findMany({orderBy: {id: "asc"}});
     return (
         <div>
             <IssueActionsButton/>
