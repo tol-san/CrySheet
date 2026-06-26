@@ -10,7 +10,7 @@ export default function DeleteIssueButton() {
             <AlertDialog.Trigger>
                 <Button color={"red"}>
                     <Trash2 size={14}/>
-                    <Link href={"/"}>Delete</Link>
+                    Delete
                 </Button>
             </AlertDialog.Trigger>
             <AlertDialog.Content>
