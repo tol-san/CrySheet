@@ -14,7 +14,7 @@ import {Issue} from "@/app/generated/prisma/client";
 type IssueForm = z.infer<typeof issueSchema>
 
 
-export default function IssueForm({issue}: { issue?: Issue }) {
+export default  function IssueForm({issue}: { issue?: Issue }) {
     const router = useRouter();
     const [error, setError] = useState<string>();
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -30,7 +30,6 @@ export default function IssueForm({issue}: { issue?: Issue }) {
             else
                 await axios.post("/api/issue", data);
             router.push("/issue")
-            router.refresh()
         } catch {
             setIsSubmitting(false)
             setError("An unexpected error occurred.");

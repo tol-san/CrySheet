@@ -32,7 +32,7 @@ export default async function Page({params}: { params: Promise<{ id: string }> }
             <Box>
                 <Flex gap={"3"} direction={"column"}>
                     <EditIssueButton issueId={issue.id}/>
-                    <DeleteIssueButton/>
+                    <DeleteIssueButton issueId={issue.id}/>
                 </Flex>
             </Box>
         </Grid>
