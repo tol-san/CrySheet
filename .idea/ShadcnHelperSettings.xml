@@ -2718,6 +2718,18 @@
         <option name="homepage" value="https://www.payload-components.xyz" />
         <option name="urlTemplate" value="https://www.payload-components.xyz/r/{name}.json" />
       </RegistryConfigState>
+      <RegistryConfigState>
+        <option name="id" value="central-evex" />
+        <option name="name" value="Evex" />
+        <option name="namespace" value="@evex" />
+        <option name="baseUrl" value="https://evex.sh/r" />
+        <option name="stylePath" value="/{name}.json" />
+        <option name="type" value="community" />
+        <option name="enabled" value="false" />
+        <option name="description" value="Installable AI agent recipes for Eve apps, including PR review, data analysis, and workflow automation agents." />
+        <option name="homepage" value="https://evex.sh" />
+        <option name="urlTemplate" value="https://evex.sh/r/{name}.json" />
+      </RegistryConfigState>
     </registryConfigs>
   </component>
 </project>
