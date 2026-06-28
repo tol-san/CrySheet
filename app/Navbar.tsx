@@ -6,6 +6,7 @@ import classname from "classnames"
 import Image from "next/image";
 import {useSession} from "next-auth/react";
 import {Box, Container, DropdownMenu, Flex, Text} from "@radix-ui/themes";
+import { signOut } from "next-auth/react"
 
 export default function Navbar() {
 
@@ -79,10 +80,16 @@ const AuthState = () => {
                     <DropdownMenu.Label>
                         <Text>{session?.user?.email}</Text>
                     </DropdownMenu.Label>
-                    <DropdownMenu.Item>
-                        <Text >
-                            <Link href={"/api/auth/signout"}>Sign Out</Link>
-                        </Text>
+                    <DropdownMenu.Item asChild>
+                        <button
+                            onClick={() =>
+                                signOut({
+                                    redirectTo: "/",
+                                })
+                            }
+                        >
+                            Sign Out
+                        </button>
                     </DropdownMenu.Item>
                 </DropdownMenu.Content>
             </DropdownMenu.Root>

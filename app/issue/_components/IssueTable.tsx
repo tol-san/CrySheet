@@ -5,7 +5,7 @@ import { Table } from "@radix-ui/themes";
 
 export default function IssueTable({issues}: {issues: Issue[]}) {
     return (
-        <Table.Root>
+        <Table.Root>w
             <Table.Header>
                 <Table.Row>
                     <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>

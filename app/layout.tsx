@@ -5,6 +5,7 @@ import "./globals.css";
 import Navbar from "@/app/Navbar";
 import {Container, Theme} from "@radix-ui/themes";
 import Providers from "@/app/auth/Provider";
+import React from "react";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
