@@ -7,6 +7,7 @@ import EditIssueButton from "@/app/issue/[id]/EditIssueButton";
 import IssueDetail from "@/app/issue/[id]/IssueDetail";
 import DeleteIssueButton from "@/app/issue/[id]/DeleteIssueButton";
 import {auth} from "@/auth";
+import AssigneeSelect from "@/app/issue/[id]/edit/AssigneeSelect";
 
 export default async function Page({params}: { params: Promise<{ id: string }> }) {
     const {id} = await params;
@@ -29,6 +30,7 @@ export default async function Page({params}: { params: Promise<{ id: string }> }
             {session &&
                 <Box>
                     <Flex gap={"3"} direction={"column"}>
+                        <AssigneeSelect/>
                         <EditIssueButton issueId={issue.id}/>
                         <DeleteIssueButton issueId={issue.id}/>
                     </Flex>
