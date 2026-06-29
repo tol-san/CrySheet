@@ -1,13 +1,15 @@
 import React from 'react'
-import {Button} from "@radix-ui/themes";
+import {Button, Flex} from "@radix-ui/themes";
 import Link from "next/link";
+import IssueStatusFilter from "@/app/issue/IssueStatusFilter";
 
 export default function IssueActionsButton() {
     return (
-        <div>
+        <Flex justify={"between"}>
+            <IssueStatusFilter/>
             <Button>
                 <Link href="/issue/new">CREATE</Link>
             </Button>
-        </div>
+        </Flex>
     )
 }

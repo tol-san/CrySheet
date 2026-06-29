@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import {Select} from "@radix-ui/themes";
-import {useQueries, useQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import {Issue, User} from "@/app/generated/prisma/client";
 import {Skeleton} from "@/app/components";
@@ -16,14 +16,16 @@ export default function AssigneeSelect({issue}: { issue: Issue }) {
     })
     if (isLoading) return <Skeleton/>
     if (error) return null;
+
+    const assignedIssue = (userId: string) => {
+        axios
+            .patch("/api/issue/" + issue.id, {assignedToUserId: userId === "unassigned" ? null : userId}).catch(() => toast.error("Changes could not be save."))
+    }
     return (
         <>
             <Select.Root
                 defaultValue={issue.assignedToUserId || "unassigned"}
-                onValueChange={userId => {
-                    axios
-                        .patch("/api/issue/" + issue.id, {assignedToUserId: userId === "unassigned" ? null : userId}).catch(() => toast.error("Changes could not be save."))
-                }}
+                onValueChange={assignedIssue}
             >
                 <Select.Trigger placeholder={"Assign..."}/>
                 <Select.Content>
