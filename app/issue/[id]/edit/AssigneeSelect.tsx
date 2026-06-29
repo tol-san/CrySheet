@@ -3,10 +3,10 @@ import React from 'react'
 import {Select} from "@radix-ui/themes";
 import {useQueries, useQuery} from "@tanstack/react-query";
 import axios from "axios";
-import {User} from "@/app/generated/prisma/client";
+import {Issue, User} from "@/app/generated/prisma/client";
 import {Skeleton} from "@/app/components";
 
-export default function AssigneeSelect() {
+export default function AssigneeSelect({issue}: {issue: Issue}) {
     const {data: users, isLoading, error} = useQuery<User[]>({
         queryKey: ["users"],
         queryFn:() => axios.get("/api/users").then(res => res.data),
@@ -16,11 +16,17 @@ export default function AssigneeSelect() {
     if (isLoading) return <Skeleton/>
     if (error) return null;
     return (
-        <Select.Root>
+        <Select.Root
+            defaultValue={issue.assignedToUserId || "unassigned"}
+            onValueChange={userId => {
+                axios.patch("/api/issue/" + issue.id, { assignedToUserId: userId === "unassigned" ? null : userId  })
+            }}
+        >
             <Select.Trigger placeholder={"Assign..."}/>
             <Select.Content>
                 <Select.Group>
                     <Select.Label>Suggestions</Select.Label>
+                    <Select.Item value={"unassigned"}>Unassigned</Select.Item>
                     {users?.map(user => (
                         <Select.Item key={user.id} value={user.id}>{user.name}</Select.Item>
                     ))}
