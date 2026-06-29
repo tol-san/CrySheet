@@ -3,6 +3,7 @@
 import React from 'react'
 import {Status} from "@/app/generated/prisma/enums";
 import {Select} from "@radix-ui/themes";
+import {useRouter} from "next/navigation";
 
 const statuses: {id: number,label: string, value?: Status}[] = [
     {id: 1, label: "All"},
@@ -12,9 +13,14 @@ const statuses: {id: number,label: string, value?: Status}[] = [
 ]
 
 export default function IssueStatusFilter() {
+    const router = useRouter();
     return (
-        <Select.Root>
-            <Select.Trigger placeholder={"Filter by..."}/>
+        <Select.Root
+            onValueChange={(status) => {
+            const query = status ? `?status=${status}` : "";
+             router.push("/issue"+ query);
+        }}>
+            <Select.Trigger placeholder={"Filter status by..."}/>
             <Select.Content>
                 {statuses.map(status => (
                     <Select.Item key={status.id} value={status.value || ""}>{status.label}</Select.Item>
